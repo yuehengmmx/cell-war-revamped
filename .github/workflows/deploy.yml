@@ -48,12 +48,11 @@ jobs:
           key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
 
       - name: Build WASM
-        run: |
-          # Enable getrandom JavaScript support and optimize for WASM
-          export RUSTFLAGS="-C target-feature=+bulk-memory --cfg getrandom_js"
-          export CARGO_CFG_GETRANDOM_JS=1
-          wasm-pack build --target web --release
-        shell: bash
+        run: wasm-pack build --target web --release
+        env:
+          RUSTFLAGS: '--cfg getrandom_js'
+          CARGO_CFG_GETRANDOM_JS: '1'
+          CARGO_CFG_TARGET_FEATURE: 'bulk-memory'
 
       - name: Copy HTML and assets
         run: |
