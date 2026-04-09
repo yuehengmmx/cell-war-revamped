@@ -1,5 +1,6 @@
 [target.wasm32-unknown-unknown]
 runner = "wasm-bindgen-test-runner"
+rustflags = ["--cfg", "getrandom_js"]
 
 [profile.release]
 opt-level = "z"

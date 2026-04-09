@@ -49,6 +49,8 @@ jobs:
 
       - name: Build WASM
         run: wasm-pack build --target web --release
+        env:
+          CARGO_CFG_GETRANDOM_JS: yes
 
       - name: Copy HTML and assets
         run: |
