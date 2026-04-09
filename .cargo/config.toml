@@ -1,9 +1,12 @@
 [target.wasm32-unknown-unknown]
 runner = "wasm-bindgen-test-runner"
-rustflags = ["--cfg", "getrandom_js"]
 
 [profile.release]
 opt-level = "z"
 lto = true
 strip = true
 codegen-units = 1
+
+# Force getrandom to use JavaScript for WASM builds
+[env]
+CARGO_CFG_GETRANDOM_JS = "1"
