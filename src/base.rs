@@ -1,8 +1,6 @@
 use std::f32::consts::PI;
 use std::time::Instant;
 use bevy::{ prelude::*};
-use bevy::state::state::{OnEnter, OnExit};
-use bevy::state::condition::in_state;
 
 use crate::player::*;
 use crate::turret::*;

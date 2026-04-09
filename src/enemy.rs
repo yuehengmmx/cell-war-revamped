@@ -1,9 +1,6 @@
 use std::{ f32::consts::PI, time::{Duration, Instant}};
 use bevy::{prelude::*};
-#[cfg(not(target_arch = "wasm32"))]
 use rand::prelude::*;
-use bevy::state::state::{OnEnter, OnExit};
-use bevy::state::condition::in_state;
 
 use crate::base::*;
 use crate::player::*;
@@ -141,12 +138,12 @@ pub fn enemy_movement( mut enemy_query: Query<(&mut Transform, &mut Enemy), (Wit
         let base_translation = base_query.single().unwrap().translation;
         match enemy.variant{
             EnemyType::Pawn => {
-                let direction = (base_translation - t.translation).normalize() + Vec3::new(generate_random_range(0.4, 0.4),generate_random_range(0.4, 0.4),0.0, );
+                let direction = (base_translation - t.translation).normalize() + Vec3::new(rand::rng().random_range(0.4..=0.4),rand::rng().random_range(0.4..=0.4),0.0, );
                 t.translation += direction* enemy.speed *time.delta_secs();
                 t.rotation = Quat::from_rotation_z(direction.y.atan2(direction.x) - PI/2.0);
             },
             EnemyType::Stinger => {
-                let direction = (base_translation - t.translation).normalize() + Vec3::new(generate_random_range(-0.5, 0.5),generate_random_range(-0.5, 0.5),0.0, );
+                let direction = (base_translation - t.translation).normalize() + Vec3::new(rand::rng().random_range(-0.5..=0.5),rand::rng().random_range(-0.5..=0.5),0.0, );
                 t.translation += direction* enemy.speed *time.delta_secs();
                 t.rotation = Quat::from_rotation_z(direction.y.atan2(direction.x) - PI/2.0);
             },
@@ -188,7 +185,7 @@ pub fn enemy_movement( mut enemy_query: Query<(&mut Transform, &mut Enemy), (Wit
                                 scale : Vec3::splat(0.2),
                                 ..default()
                             },
-                            deacon: Deacon{speed: 20.0, size : Vec2::new(10.0, 10.0), direction : Vec3::new(generate_random_range(-1.0, 1.0), generate_random_range(-1.0, 1.0), 0.0), instant : Instant::now()}
+                            deacon: Deacon{speed: 20.0, size : Vec2::new(10.0, 10.0), direction : Vec3::new(rand::rng().random_range(-1.0..1.0), rand::rng().random_range(-1.0..1.0), 0.0), instant : Instant::now()}
                         });
                     }
                 }
@@ -218,7 +215,7 @@ pub fn enemy_movement( mut enemy_query: Query<(&mut Transform, &mut Enemy), (Wit
             },
             EnemyType::Neonate(mut inner_struct) => {
                 if inner_struct.time_since_spawn().as_secs() > 1{
-                    let direction = (base_translation - t.translation).normalize() + Vec3::new(generate_random_range(-0.5, 0.5),generate_random_range(-0.5, 0.5),0.0);
+                    let direction = (base_translation - t.translation).normalize() + Vec3::new(rand::rng().random_range(-0.5..=0.5),rand::rng().random_range(-0.5..=0.5),0.0);
                     inner_struct.direction = direction;
                 }
                 let direction = Vec3::new(inner_struct.direction.x, inner_struct.direction.y, 0.0);
