@@ -2,6 +2,7 @@
 name = "cell-war"
 version = "0.1.0"
 edition = "2021"
+resolver = "2"
 
 [[bin]]
 name = "cell-war"
@@ -13,8 +14,11 @@ path = "src/lib.rs"
 crate-type = ["cdylib"]
 
 [dependencies]
-bevy = {version = "0.16", features=['mp3']}
+bevy = {version = "0.16", features=['mp3', 'default_font']}
 wasm-bindgen = "0.2"
 rand = "0.10.0"
+getrandom = { version = "=0.2.17", features = ["js"] }
 
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+getrandom = { version = "=0.2.17", features = ["js"] }
 
