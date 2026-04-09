@@ -1,4 +1,6 @@
 use bevy::prelude::*;
+use bevy::state::state::{OnEnter, OnExit};
+use bevy::state::condition::in_state;
 use crate::{base::*, part::PartTier, repetitive_code::*};
 use super::{AppState,SimulationState};
 use std::f32::consts::PI;

@@ -1,4 +1,5 @@
 use bevy::{math::bounding::{BoundingCircle, IntersectsVolume}, prelude::*};
+#[cfg(not(target_arch = "wasm32"))]
 use rand::prelude::*;
 
 // i did not make a create bundle function becuase the lines wont change since the params passed in is long*
@@ -18,16 +19,27 @@ pub fn get_enemy_transform_0_2(enemy_translation : Vec3) -> Transform{
     }
 }
 
+#[cfg(not(target_arch = "wasm32"))]
 pub fn generate_random_number() -> f32{
-    let mut rng = rand::rng();
-    let random_number: f32 = rng.random();
+    use rand::Rng;
+    let mut rng = rand::thread_rng();
+    let random_number: f32 = rng.gen();
     random_number
 }
 
+#[cfg(not(target_arch = "wasm32"))]
 pub fn generate_random_usize() -> usize{
-    let mut rng = rand::rng();
-    let random_number: usize = rng.random_range(0..=4);
+    use rand::Rng;
+    let mut rng = rand::thread_rng();
+    let random_number: usize = rng.gen_range(0..=4);
     random_number
+}
+
+#[cfg(not(target_arch = "wasm32"))]
+pub fn generate_random_range(min: f32, max: f32) -> f32 {
+    use rand::Rng;
+    let mut rng = rand::thread_rng();
+    rng.gen_range(min..=max)
 }
 
 

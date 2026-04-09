@@ -1,6 +1,9 @@
 use std::{ f32::consts::PI, time::Instant};
+#[cfg(not(target_arch = "wasm32"))]
 use rand::prelude::*;
 use bevy::{ prelude::*, window::PrimaryWindow};
+use bevy::state::state::{OnEnter, OnExit};
+use bevy::state::condition::in_state;
 
 use crate::part::*;
 use crate::repetitive_code::*;
@@ -290,7 +293,7 @@ pub fn player_shoot_enemy(mut commands: Commands, mut enemy_query: Query<(Entity
                                                 scale : Vec3::splat(0.25),
                                                 ..default()
                                             },
-                                            enemy: Enemy{health : 150, variant: EnemyType::Splitter { split_count: 1, instant: Instant::now(), direction : Vec3::new(rand::rng().random_range(-0.1..=0.1), rand::rng().random_range(-0.1..=0.1), 0.0)}, speed : 20.0, size : Vec2::new(10.0, 10.0)}
+                                            enemy: Enemy{health : 150, variant: EnemyType::Splitter { split_count: 1, instant: Instant::now(), direction : Vec3::new(generate_random_range(-0.1, 0.1), generate_random_range(-0.1, 0.1), 0.0)}, speed : 20.0, size : Vec2::new(10.0, 10.0)}
                                         });
                                 }     
                                 commands.entity(enemy_entity).try_despawn();
@@ -306,7 +309,7 @@ pub fn player_shoot_enemy(mut commands: Commands, mut enemy_query: Query<(Entity
                                         scale : Vec3::splat(0.20),
                                         ..default()
                                     },
-                                    enemy: Enemy{health : 100, variant: EnemyType::Splitter { split_count: 2, instant: Instant::now(), direction : Vec3::new(rand::rng().random_range(-0.1..=0.1), rand::rng().random_range(-0.1..=0.1), 0.0)}, speed : 25.0, size : Vec2::new(5.0, 5.0)}
+                                    enemy: Enemy{health : 100, variant: EnemyType::Splitter { split_count: 2, instant: Instant::now(), direction : Vec3::new(generate_random_range(-0.1, 0.1), generate_random_range(-0.1, 0.1), 0.0)}, speed : 25.0, size : Vec2::new(5.0, 5.0)}
                                 });
                                 }
                                 let reward_chance = generate_random_number();
